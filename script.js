@@ -4,12 +4,11 @@
 console.log("\nPart 1: Humble Beginings");
 
 // Model a simple adventurer - Robin - with basic properties such as health and an inventory.
-// Give Robin a companion to travel with – a cat called “Leo”. Give Leo a friend of his own: a flea named "Frank".
-// Give Robin a method for “dice rolls” - rolls() - a common way to handle outcomes in adventuring games. 
 const adventurer = {
     name: "Robin",
     health: 10,
     inventory: ["sword", "potion", "artifact"],
+    // Give Robin a companion to travel with – a cat called “Leo”. Give Leo a friend of his own: a flea named "Frank".
     companion: {
         name: "Leo",
         type: "Cat",
@@ -19,6 +18,7 @@ const adventurer = {
             belongings: ["small hat", "sunglasses"]
         }
     },
+    // Give Robin a method for “dice rolls” - rolls() - a common way to handle outcomes in adventuring games. 
     roll(mod = 0) {
         const result = Math.floor(Math.random() * 20) + 1 + mod;
         console.log(`${this.name} rolled a ${result}.`)
@@ -44,13 +44,18 @@ class Character {
         this.health = 100;
         this.inventory = [];
     }
+    /**
+     * Part 4: Class Uniforms
+     */
     static MAX_HEALTH = 100;
+
     getInventory() {
         return this.inventory;
     }
     roll(mod = 0) {
         const result = Math.floor(Math.random() * 20) + 1 + mod;
         console.log(`${this.name} rolled a ${result}.`)
+        return result;
     }
 }
 
@@ -74,6 +79,9 @@ robin.companion.companion.roll();
 console.log("\nPart 3: Class Features");
 
 class Adventurer extends Character {
+    /**
+     * Part 4: Class Uniforms
+     */
     static ROLES = ["Fighter", "Healer", "Wizard", "Captain"];
     constructor(name, role, hasCompanions) {
         super(name);
@@ -88,9 +96,32 @@ class Adventurer extends Character {
         return this.inventory;
     }
     // Adventurers have the ability to scout ahead of them.
-    static scout() {
+    scout() {
         console.log(`${this.name} is scouting ahead...`);
         super.roll();
+    }
+    /**
+     * Part 6: Developing Skills
+    */
+    // Adventurers have the ability to fight each other
+    duel(adventurer) { // Accept an Adventurer as a parameter.
+        let count = 1;
+        // Repeat this process until one of the two adventurers reaches 50 health.
+        while (adventurer.health > 50 && this.health > 50) {
+            // Use the roll() functionality to create opposing rolls for each adventurer.
+            let player1Roll = adventurer.roll();
+            let player2Roll = this.roll();
+            // Subtract 1 from the adventurer with the lower roll.
+            if (player1Roll < player2Roll) --adventurer.health;
+            if (player2Roll < player1Roll) --this.health;
+            // Log the results of this “round” of the duel, including the rolls and current health values.
+            console.log(`\nRound ${count} Results:\n  Player 1\n    Dice roll: ${player1Roll}\n    Health: ${adventurer.health}`);
+            console.log(`   Player 2\n    Dice roll: ${player2Roll}\n    Health: ${this.health}`);
+            count++;
+        }
+        // Log the winner of the duel: the adventurer still above 50 health.
+        if (adventurer.health > 50) console.log(`And the winner is...${adventurer.name}!`);
+        if (this.health > 50) console.log(`And the winner is...${this.name}!`);
     }
 }
 
@@ -120,7 +151,7 @@ class Companion extends Adventurer {
             ${this.name}'s inventory: ${this.inventory}
             ${robin2.name}'s inventory: ${pInventory}`);
         }, 60000);
-        
+
     }
 }
 
@@ -131,10 +162,7 @@ const leo = new Companion("Leo", "Cat", true);
 leo.inventory = [];
 leo.companion = new Companion("Frank", "Flea", false);
 leo.companion.inventory = ["small hat", "sunglasses"];
-leo.companion.loanItems();
+// leo.companion.loanItems();
 
-
-/**
- * Part 4: Class Uniforms
- */
-console.log("\nPart 4: Class Uniforms");
+const peter = new Adventurer("Peter", "fighter", false);
+robin2.duel(peter);
