@@ -1,2 +1,2 @@
-Creating a simple adventuring game using object-oriented programming principles
+Creating a simple adventuring game using object-oriented programming principles -
 [Assignment documentation](https://www.canva.com/design/DAGishkdW_E/c1YcL5Rd9AP1M0Lo7A32mA/edit?utm_content=DAGishkdW_E&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
