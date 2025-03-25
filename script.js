@@ -166,3 +166,5 @@ leo.companion.inventory = ["small hat", "sunglasses"];
 
 const peter = new Adventurer("Peter", "fighter", false);
 robin2.duel(peter);
+
+// I wasn't able to do Part 7
